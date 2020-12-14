@@ -4,9 +4,6 @@ import sqlite3
 from sys import argv
 import pandas as pd
 
-def parse_price(price):
-    return float(price.replace(' ','').replace('zł','').replace(',','.').replace('/mc',''))
-
 def parse_page(number):
     print(f'strona{number}')
     page = get(f'{URL}&page={number}')
@@ -23,8 +20,8 @@ def parse_page(number):
         bs2 = BeautifulSoup(page_details.content, 'html.parser')
 
 
-        for details in bs2.find_all('div', class_="css-dwmx8v-Fe"):
-            rynek = details.find_all('strong')[2].get_text()
+        for details in bs2.find_all('div', class_="css-2wxlkt"):
+            rynek = details.find_all('div',class_="css-1s5nyln")[2].get_text()
 
         cursor.execute('INSERT into mieszkania VALUES(?,?,?,?,?)', (name, location, price, size, rynek))
         db.commit()
@@ -42,8 +39,3 @@ for page in range(1, 50):
     parse_page(page)
 
 db.close()
-
-
-  
- 
-
