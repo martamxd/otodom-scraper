@@ -35,7 +35,7 @@ if len(argv) > 1 and argv[1] == 'setup':
     cursor.execute('''CREATE TABLE mieszkania (name TEXT, location TEXT, price TEXT, size REAL, rynek TEXT) ''')
     quit()
 
-for page in range(1, 50):
+for page in range(16, 50):
     parse_page(page)
 
 db.close()
