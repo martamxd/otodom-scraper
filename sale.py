@@ -20,8 +20,8 @@ def parse_page(number):
         bs2 = BeautifulSoup(page_details.content, 'html.parser')
 
 
-        for details in bs2.find_all('div', class_="css-2wxlkt"):
-            rynek = details.find_all('div',class_="css-1s5nyln")[2].get_text()
+        for details in bs2.find_all('div', class_="css-1d9dws4 e1dlfs272"):
+            rynek = details.find_all('div',class_="css-1ytkscc ecjfvbm0")[2].get_text()
 
         cursor.execute('INSERT into mieszkania VALUES(?,?,?,?,?)', (name, location, price, size, rynek))
         db.commit()
@@ -35,7 +35,7 @@ if len(argv) > 1 and argv[1] == 'setup':
     cursor.execute('''CREATE TABLE mieszkania (name TEXT, location TEXT, price TEXT, size REAL, rynek TEXT) ''')
     quit()
 
-for page in range(16, 50):
+for page in range(1, 50):
     parse_page(page)
 
 db.close()
