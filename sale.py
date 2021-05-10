@@ -3,6 +3,7 @@ from requests import get
 import sqlite3
 from sys import argv
 import pandas as pd
+from datetime import date
 
 def parse_page(number):
     print(f'strona{number}')
@@ -23,7 +24,7 @@ def parse_page(number):
         for details in bs2.find_all('div', class_="css-1d9dws4 egzohkh2"):
             rynek = details.find_all('div',class_="css-1ytkscc ev4i3ak0")[2].get_text()
 
-        cursor.execute('INSERT into mieszkania VALUES(?,?,?,?,?)', (name, location, price, size, rynek))
+        cursor.execute('INSERT into mieszkania VALUES(?,?,?,?,?,?)', (name, location, price, size, rynek, date.today()))
         db.commit()
 
 
@@ -32,10 +33,10 @@ db = sqlite3.connect('dane.db')
 cursor = db.cursor()
 
 if len(argv) > 1 and argv[1] == 'setup':
-    cursor.execute('''CREATE TABLE mieszkania (name TEXT, location TEXT, price TEXT, size REAL, rynek TEXT) ''')
+    cursor.execute('''CREATE TABLE mieszkania (name TEXT, location TEXT, price TEXT, size REAL, rynek TEXT, data TEXT) ''')
     quit()
 
-for page in range(5, 50):
+for page in range(1, 50):
     parse_page(page)
 
 db.close()
