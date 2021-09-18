@@ -16,7 +16,7 @@ def parse_page(number):
         kind ,location = offer.find('p', class_="text-nowrap").get_text().split(":")
         price = parse_price(offer.find('li', class_="offer-item-price").get_text().strip(' \n\t'))
         size = offer.find('strong',class_="visible-xs-block").get_text()
-        link = offer.find('a')
+        szczegoly = offer.find('a').attrs['href']
         #break
         #print(name, location, price, size)
 
